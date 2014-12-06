@@ -1,0 +1,17 @@
+/*****************************************************************************
+
+		Copyright (c) 2003 My Company
+
+ Project:  EDITOR
+ FileName: dic_tree.PRE
+ Purpose: Predicate definitions for DIC_TREE.PRO
+ Written by: E. Beniaminov
+ Comments:
+******************************************************************************/
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  %win_dic_tree_Create(WINDOW Parent) - (i)
+  create_xml_file ()
+	
+%END_DECL

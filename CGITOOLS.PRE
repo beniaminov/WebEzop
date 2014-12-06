@@ -1,0 +1,13 @@
+/*****************************************************************************
+
+		Copyright (c) 1984 - 2000 Prolog Development Center A/S
+
+ FileName: CGITOOLS.PRE
+ Purpose: Predicate definitions for CGITOOLS.PRO
+******************************************************************************/
+GLOBAL DOMAINS
+  PARM = cgiparm(STRING Name,STRING Val)
+  PARMLIST = PARM*
+
+GLOBAL PREDICATES
+  procedure cgi_GetParmList(PARMLIST)-(o)

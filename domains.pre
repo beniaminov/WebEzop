@@ -1,0 +1,76 @@
+/*****************************************************************************
+
+		 Copyright (c)  2000 -2003 RSUH, 
+		 						Cafedra of Mathematics, Logic and Intellectual Systems
+			
+
+ Project:  WinEzop
+ FileName: EDITOR.PRO
+ Purpose: Editor
+ Written by:  Eugene Beniaminov
+ Comments: EZOP  is the system for  knowledge represntation 
+******************************************************************************/
+/*
+CONSTANTS
+%BEGIN_CONST Project configuration constants
+  use_mdi = 1
+  use_3dctrl = 1
+  use_dlgpack = 1
+  use_editor = 1
+  use_message = 1
+  use_treebrowser = 1
+%END_CONST
+*/
+%include "editor.con"
+
+include "types.dom"		
+include "pdcrunt.dom"		
+include "pdcrunt.pre"
+
+
+
+
+
+/*****************************************************************************
+			User's Declarations.
+*****************************************************************************/
+
+GLOBAL DOMAINS
+  DB_SELECTOR = browselist_db; concept_dubl; concept_dubl_inter	% For treebrowser tool
+  FILE = fileselector1; fileselector2; input; myfile; messages % To be edited
+
+
+global domains
+  zip_unzip = zip; unzip_concept; unzip_env; del_zip_concept
+ 
+  id      =       string     %идентификатор термов внутри онтологии 
+% list_id = id*
+ 
+  idTemplate = id_t(integer IdConcept, id)
+  list_idTemplate = idTemplate*
+  type_msg = warning; 			err;		 did; 		         gr_an;
+ 	   %"Предупреждение"; "Ошибка",	 "Сделано", "Грамматический анализ", 
+           calc;           approx;			rwrt;	   		diagn;	
+ 	   %"Вычисление", "Изменение в аппроксимации", "Правило переписывания",    "Диагностика"
+ 		prov
+ 	   %''Док."
+  expr         = nil; undef; r(real); nc(string); ex(id,expr_list)   ; v(string,expr) % локальная переменная v(Name,Type)  % c(string);  убрано
+  expr_list    = expr *
+  twodimlist = slist *
+  meta_list = slist *
+  type_msg_list = type_msg *
+  w_v_t =w(string); var(expr); t(expr); v
+  list_w_v_t = w_v_t*
+
+  chlist = char *
+
+  action = text_scanned; plates_imposed; type_checked
+  
+  
+
+
+/* конец добавления */
+%include "editor.pre"
+%include "product.pre"
+
+

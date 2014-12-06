@@ -1,0 +1,14 @@
+global predicates
+
+get_defin1(string) - (o)
+get_defin2(string) - (o)
+get_last_cmd(string) - (o)
+set_current_concept_name(string) - (i)
+set_environment_name(string)-(i) % â Title TaskWindow è â environment()
+put_defin2(string) - (i)
+put_last_cmd(string) - (i)
+load_config
+load_env_concept
+put_defin1(string) - (i)
+get_current_environment_id(integer IdEnv) -(o)
+get_newIdConcept(integer Id) -(o)

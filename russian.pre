@@ -1,0 +1,7 @@
+global predicates
+
+c1251_utf(integer, integer) - (i, o) (o, i)
+c_utf_1251(integer, integer)- (i, o)
+c1251_utf8(integer,integer,integer) - (o,i,i),(i,o,o)
+
+

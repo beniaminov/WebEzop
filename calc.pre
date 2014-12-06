@@ -1,0 +1,39 @@
+global Domains 
+  pair=v_t(expr,expr)
+  pair_list=pair*
+
+
+GLOBAL PREDICATES  
+
+
+calc_on_approx(expr,expr) - determ (i,o)
+calc(expr,expr) -determ (i,o)  %(i, r(o))
+expr_to_str(expr,string) - procedure (i,o)
+replaceStr_all(string Old, string New,string Str,string NewStr) - determ (i,i,i,o)
+error_msg(STRING,INTEGER) - determ (i,i)
+calc_type(expr,expr) - (i,o)
+% basic_eq.pro
+ make_morphism(expr,expr,expr) - (i,i,i)
+list_not_repeat(slist,slist) - (i,o)
+% subobjec.pro
+list_not_repeat(expr_list,expr_list) - (i,o)
+
+% subobjec.pro
+	 % is_subobject(expr,expr) - (i,i)
+isa_calc_type(expr Term,expr Type) - (i,i)
+replace_var_on_ex(expr_list Arglist,expr_list ListVar,expr Term,expr TermRes) - determ (i,i,i,o) % заменяет в Term переменные из ListVar на соотв. выражения из ArgList
+%append(expr_list,expr_list,expr_list) - (i,i,o)
+scan(string,slist) -(i,o)
+listStr_listWord(slist,list_w_v_t) - (i,o)
+gen_term_num(integer)-(o)
+weigh(expr,integer)-(i,o)
+subobjects_of(expr,expr_list) - (i,o)
+
+
+
+
+
+
+
+
+

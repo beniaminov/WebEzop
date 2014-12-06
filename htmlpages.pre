@@ -1,0 +1,36 @@
+/*****************************************************************************
+
+		Copyright (c) 2006 OpenKnowledge
+
+ Project:  EDITOR
+ FileName: HTMLPages.PRE
+ Purpose: Predicate definitions for D:\MY DOCUMENTS\UNIVERSITY\DIPLOMA\PROJECTS\EDITOR LOCALHOST\HTMLPAGES.PRO
+ Written by: E. Beniaminov
+ Comments:
+******************************************************************************/
+
+global predicates
+dlgAsk_eq (string) - determ (i)
+dlgAsk (string) - determ (i)
+dlgMsg(string)- determ (i)
+cnptExplorerPage (slist,slist,string, string,string) - (i,i,i,i,i)
+tmplExplorerPage (slist,slist,string, string,string) - (i,i,i,i,i)
+treeCnptPage
+curCnptPage(string, string, string,string,string)
+curCnptReadonly(string, string, string,string,string)
+save_draft_form(string,string,string,string WhichFunctionsToCallOnLoad)
+send_afterdel()
+after_changever
+commandPage(slist,string UserName)
+%curCnptPage_readonly(string, string)
+%curCnptPage_head
+%curCnptPage_body(string, string)
+%curCnptPage_table(string, string)
+%startPage(string, string, string)
+msgSetup (string,string,string)
+text_into_html_page_readonly (string, string)
+treeCnptPage_text_area (string)
+indexPage
+
+
+

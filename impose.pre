@@ -1,0 +1,7 @@
+global predicates
+
+impose(string In,string First,string Rest,expr Term,expr TypeTerm) -  (i,o,o,o,o)
+impose_all_not_message(string In, expr Term, expr Type) - (i,o,o)
+impose_all(string In, expr Term, expr TypeTerm) - (i,o,o)
+type(expr,expr) - determ(i,o)  %определяет синтаксический тип выражения 
+fronttoken_my(string Str,string Tok ,string Rest)- determ (i,o,o) % с учетом кавычек и комментария

@@ -1,0 +1,32 @@
+
+include "database.pre"
+
+GLOBAL PREDICATES    % editor.pro
+nondeterm get_in_template(integer IdDostup_0_1_2, integer ID_Concept,id Id_template, string Text, string Opname, string Комментарий, list_w_v_t Список_шаблона,expr TypeRes)  - (o,o,o,i,o,o,o,o)   (o,o,o,o,o,o,o,o)(o,o,o,o,o,o,i,o) (o,o,o,o,i,o,o,o) (o,o,i,o,i,o,o,o) (o,o,o,i,o,o,o,i) (o,i,o,i,o,o,o,o) (o,o,o,o,o,o,o,i) (o,o,o,o,i,o,o,r(o)) (o,i,i,o,o,o,o,o) (o,o,o,o,i,o,o,i) (o,o,o,o,o,o,i,i)
+nondeterm get_template( integer ID_Concept,id Id_template, string Text, string Opname, string Комментарий, list_w_v_t Список_шаблона,expr TypeRes) - (i,o,o,o,o,o,o) (o,i,o,o,o,o,o) (o,o,i,o,o,o,o) (o,o,o,o,o,i,o)  (o,o,o,o,o,o,o) (o,o,o,i,o,o,o) (o,i,o,i,o,o,o) (o,o,i,o,o,o,i) (i,o,i,o,o,o,o) (o,o,o,o,o,o,i) (o,o,o,i,o,o,r(o)) (i,i,o,o,o,o,o) (o,o,o,i,o,o,i) (o,o,o,o,o,i,i)
+msg_n(type_msg,integer,slist,boolean Dlg) -(i,i,i,i)
+msg(type_msg, STRING) - (i,i)
+dictionary(expr Type) - (i)
+% make_eq.pro
+dlgAsk_call(string, string) - determ (i,o)
+dlgAsk_call_eq(string) - determ (i)
+% dbctrl.pro
+get_current_environment_file(string) -(o)
+get_current_concept_name(string) - (o)
+get_current_environment_name(string)-(o)
+error_handler(STRING,INTEGER) - (i,i)
+% form.pro
+look_tnotion_window
+% htmlpages.pro
+fatalErrorMsg (string) - procedure (i)
+write_added_templates
+change(string,string) - procedure (i,o)
+change1(string,string) - procedure (i,o)
+my_change(string,string,string) - (i,i,o)
+send_templates_list(string, twodimlist) - determ (i,o)
+send_to_debug(STRING)
+get_paramVal(string Param, string Value)- procedure(i,o)
+load_message_ezp
+open_notion_base(string FileName) -determ (i)
+
+

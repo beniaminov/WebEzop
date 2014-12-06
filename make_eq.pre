@@ -1,0 +1,19 @@
+global predicates
+
+
+create_new_constant(expr Name,expr Ob,expr Resalt)   -(i,i,o) %(i,i,r(o))         %создает новый элемент в области Ob
+replace_in_list(expr_list,expr_list Res,expr D1,expr D2)  -(i,o,i,i)   /*  replace_in_list(Desclist,RDesclist,D1,D2) - заменяет в expr_list   D1 ->D2 */
+reduce(integer,expr,expr) - determ (i,i,o)
+make_not_equal(expr,expr) - (i,i)
+order_expr(expr,expr,expr,expr) - (i,i,i,i) (i,i,o,o)
+make_element(expr,expr) - (i,i)
+is_equal(expr,expr) - (i,i)    %на аппроксимации;  используется также  в cateval, basiq_equalities
+make_equal(expr,expr) - (i,i)
+is_subobject(expr,expr) - determ (i,i)
+make_subobject(expr,expr) - (i,i)
+make_inclusion(expr,expr,expr) - (i,i,i)
+is_equal_not_message(expr,expr) - (i,i)
+isomor_with_point(expr) - (i)
+nondeterm between(expr,expr,expr) - (i,i,o)
+is_element(expr,expr) - (i,i)
+nondeterm element_of_object(expr,expr) - (o,i)

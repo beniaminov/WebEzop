@@ -1,0 +1,3 @@
+global predicates
+
+nondeterm   basic_equalities(expr)
