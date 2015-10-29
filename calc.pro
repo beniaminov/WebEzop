@@ -16,6 +16,12 @@ member(expr,expr_list) - (i,i)
 member(pair,pair_list) - (i,i)
 
 
+predicates         
+           
+create_langrules(expr DescLeft, string Rule, expr DescNt) - determ(i,i,i).  %% который  вводит  	%шаблоны по альтернативным правилам
+form_intemplate(expr DescLeft, string Rule, expr DescNt) - determ(i,i,i)  %% оторый  вводит  	%шаблон по тексту правила
+
+
  calc_list(expr_list,expr_list) -determ (i,o)
 %calc_type_list(expr_list,slist)
 calc_on_approx_list(expr_list,expr_list)
@@ -132,7 +138,7 @@ slist_to_str_nl(slist,string) - determ (i,o)
 finish_translation(list_w_v_t,slist,slist,slist)
 list_to_string_s(slist,string)
 listW_to_string(list_w_v_t,string)
-nondeterm list_var(expr_list,list_w_v_t)
+determ list_var(expr_list,list_w_v_t)
 
 nondeterm translate(expr,string)
 nondeterm translate_list(expr_list,slist)
@@ -284,6 +290,7 @@ take_defin(integer Id_concept,string Definition) -(i,o)
 recalc(string) 
 append(slist,slist,slist) - (i,i,o)
 append(expr_list,expr_list,expr_list) - (i,i,o)
+append(list_w_v_t,list_w_v_t,list_w_v_t) - (i, i, o)
 
 
 CLAUSES
@@ -380,6 +387,74 @@ exprlist_to_str_nl([H|T],Str):-expr_to_str(H,StrH1),
    concat(StrH,",",Str1),
    concat(Str1,StrT,Str).
 
+
+expr_to_struct_str(Ex,""):-retractall(glob_string(_)),translate_struct(Ex,Text,0), %Ётот предикат выдает структуру expr-выражени€
+   assert(glob_string(Text)),fail.
+
+expr_to_struct_str(_,Text):-retract(glob_string(Text1)),!, concat("\n",Text1,Text).
+
+expr_to_struct_str(_,"** ? **").
+
+otstup(0,Ot,Ot):-!. %ѕредикат строит строку из N пробелов
+otstup(N,Ot,OtRes):- concat(" ",Ot,Ot1), 
+		N1=N-1,
+		otstup(N1,Ot1,OtRes).
+
+translate_struct(nc(Word),Res,N):-!, %Ётот предикат строит структуру expr-выражени€
+	otstup(N,"",Ot),
+	format(Res,"%<L%>\"%\"</L%>\n",Ot,N,Word,N).
+translate_struct(v(Name,_),Res,N):-!,
+	otstup(N,"",Ot),
+	format(Res,"%<L%>%</L%>\n",Ot,N,Name,N).
+translate_struct(r(R),Res,N):-str_real(Str,R),!,
+	otstup(N,"",Ot),
+	format(Res,"%<L%>%</L%>\n",Ot,N,Str,N).
+translate_struct(undef,Res,N):-!,
+	otstup(N,"",Ot),
+	format(Res,"%<L%>%</L%>\n",Ot,N,"¬ыражение не определено",N).
+translate_struct(ex(Opname,[]),Res,N):-
+  	 get_in_template(_,_,_,_,Opname,_,List,_),!,
+  	 listW_to_string(List,Text),
+	otstup(N,"",Ot),
+	format(Res,"%<L%>\n%</L%>\n",Ot,N,Text,N).
+translate_struct(ex(Opname,Arglist),Res,N):-
+   	get_in_template(_,_,_,_,Opname,_,List,_),!,
+	N1=N+1,
+   	translate_struct_list(Arglist,Textlist,N1),
+    	 finish_translation(List,Textlist,[],Reslist),
+   	list_to_string(Reslist," ",Text),
+   	otstup(N,"",Ot),
+   	format(Res,"%<L%>\n%</L%>\n",Ot,N,Text,N).   
+translate_struct(ex(Opname,Arglist),Res,N):-
+   	get_template(_,_,_,Opname,_,List,_),
+	N1=N+1,
+   	translate_struct_list(Arglist,Textlist,N1),
+     	finish_translation(List,Textlist,[],Reslist),
+   	list_to_string(Reslist," ",Text),!,
+   	otstup(N,"",Ot),
+   	format(Res,"%<L%>\n%</L%>\n",Ot,N,Text,N).
+translate_struct(ex(Opname,[]),Res,N):-!,
+	otstup(N,"",Ot),
+	format(Res,"%<L%>%</L%>\n",Ot,N,Opname,N).  
+translate_struct(ex(Opname,Arglist),Res,N):-!,
+   	list_var(Arglist,Listvar1),
+   	Listvar=[w("(")|Listvar1],  
+	N1=N+1, 
+   	translate_struct_list(Arglist,Textlist,N1),
+   	finish_translation([w(Opname)|Listvar],Textlist,[],Reslist),
+   	list_to_string(Reslist," ",Text),
+   	otstup(N,"",Ot),
+   	format(Res,"%<L%>\n%</L%>\n",Ot,N,Text,N).
+translate_struct(_,Res,N):-
+	otstup(N,"",Ot),
+	format(Res,"%<L%>¬ыражение не распознано</L%>\n",Ot,N,N).
+   
+translate_struct_list([],[],_):-!.  %ѕредикат строит по списку expr- выражений список структур этих выражений с отступом длины N 
+translate_struct_list([H1|T1],[H2|T2],N):-translate_struct(H1,H2,N),translate_struct_list(T1,T2,N).
+
+
+
+
 expr_to_str(Ex,""):-retractall(glob_string(_)),translate(Ex,Text),
    assert(glob_string(Text)),fail.
 
@@ -410,7 +485,7 @@ list_to_string_s([H|T],S):-!,list_to_string_s(T,Tmp),
    	concat(H," ",Tmp1),concat(Tmp1,Tmp,S).
 
 
-list_var([_],[var(ex("@",[])),w(")")]).
+list_var([_],[var(ex("@",[])),w(")")]):-!.
 list_var([_|T],[var(ex("@",[])),w(",")|T1]):-list_var(T,T1).
 
 
@@ -2644,6 +2719,20 @@ calc(ex("select",[Ex,Ob]),ex(Report,[])) :- !,
 calc(ex("select_where",[nc(Ex),nc(Vars),nc(Cond)]),ex(Report,[])) :- !,
 	send_to_debug("My v select_where"),
  select_where_report(Ex,Vars,Cond,Report).
+ 
+ 
+ %Ѕэкус
+	calc(ex("backus",[Left, nc(Rule)]),ex("true",[])):-!,
+	create_new_constant(nc("nonterminal"), ex("ob",[]),DescNt), %%построение класса 										%%                  nonterminal
+	make_subobject(DescNt, ex("ob",[])),
+	create_new_constant(Left, DescNt,DescLeft),
+	upper_lower (Rule, LowerRule),
+	send_to_debug("ƒошел до Ѕэкуса"),
+	create_langrules(DescLeft, LowerRule, DescNt).
+	%Ѕэкус
+	
+	calc(ex("get_structur",[Ex]),ex(Struct,[])) :- !,
+	expr_to_struct_str(Ex,Struct).
 
 /*
 calc(ex("select_where",[_Ex,_Ob]),ex("Report",[])) :- !,
@@ -2725,6 +2814,8 @@ calc(Term, undef):-
 	%write("\nЌе могу вычислить: "), write(Term),
 	msg_n(err,91, [Str], b_false),
 	fail.
+	
+	
 
 /*************************************************************
  calc_list - ¬ычисл€ет список выражений посредством обращени€
@@ -3165,4 +3256,127 @@ take_defin(ID_concept,Defin):-
           calc(Expr,_Result),	% ¬ычисление (выполнение) выражени€ (команды)
           %answer(Expr_type,Sentence,Result),
            recalc(RestText),!.
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+%бэкус, все дела_____________________________________________________________________________________________________________________________
+
+           
+    predicates       
+
+determ form_intemplate_list(expr DescNt, string Rule, list_w_v_t  InList,  list_w_v_t  List) - (i,i,i,o)  
+           
+
+	
+	
+ clauses 
+create_langrules(DescLeft, Rule, DescNt):-
+	not(searchchar(Rule, '|', _)),
+	!, %% в правиле нет альтернатив
+	form_intemplate(DescLeft, Rule, DescNt).
+create_langrules(DescLeft, Rule, DescNt):-  %% выделение частей до и после |
+	searchchar(Rule,'|',Pos),
+	!,
+	Pos1=Pos-1,
+	substring(Rule,1,Pos1,Rule1),
+	str_len(Rule,Len),
+	L=Len-Pos,
+	Pos2=Pos+1,
+	substring(Rule,Pos2,L,Rest),
+	form_intemplate(DescLeft,Rule1, DescNt),
+	create_langrules(DescLeft, Rest, DescNt).
+	
+	
+	form_intemplate(_DescLeft,Rule, _DescNt):-
+	not(fronttoken(Rule,_,_)),!. %% когда Rule пусто, ничего не делать.
+
+form_intemplate(DescLeft,Rule, DescNt):-
+	fronttoken(Rule,Tok,Rest),  
+	not(Tok="'"), %% не начинаетс€ с одинарной кавычки
+	not(fronttoken(Rest,_,_)),!,         %% когда Tok состоит из одного нетерминала
+	create_new_constant(nc(Tok), DescNt,DescTok),
+	make_subobject(DescTok, DescLeft).
+
+
+
+form_intemplate(DescLeft,Rule, DescNt):-       %% общий случай
+
+	send_to_debug("дошел до form_intemplate_list"),
+	form_intemplate_list(DescNt,Rule,[],List), %% новый предикат дл€ формировани€ списка  слов и переменных шаблона п
+							%% по тексту Rule
+	 						%% формируем текст нового шаблона
+	expr_to_str(DescLeft,Text1),
+	concat(Text1," ::= ",Text2),
+	concat(Text2,Rule, Text),
+	%% формируем остальные параметры шаблона
+	gen_term_num(IdN),
+	str_int(Id,IdN),
+ 	idConcept(IdC),
+	str_int(StrIdC,IdC),
+	concat(StrIdC,".",S1),
+	concat(S1,Id,Op),
+	retractall(del_template(_,Op,_,_)),
+	assert(in_template(1,IdC,Id,Text,Op,"Ўаблон грамматики", List, DescLeft)).
+	
+	
+	
+
+form_intemplate_list(_,Rule,List,List):-
+	not(fronttoken(Rule,_,_)),!. %% накопленный список становитс€ результатом
+form_intemplate_list(_,Rule,InList,ResList):-
+	fronttoken(Rule,Tok1,Rest1),
+	Tok1="'", %% начинаетс€ с одинарной кавычки
+	not(fronttoken(Rest1,_,_)),!, %% дальше ничего нет
+	%%format(Str, "Ћишн€€ одинарна€ кавычка"),
+	msg_n(err, 102, [] ,b_false), %% нужно ввести сообщение в файл сообщений с номером
+	fail.
+form_intemplate_list(_,Rule,InList,ResList):-
+	fronttoken(Rule,Tok1,Rest1),
+	Tok1="'", %% начинаетс€ с одинарной кавычки
+	fronttoken(Rest1,Tok2,Rest2),
+	not(fronttoken(Rest2,_,_)),!,  %% через слово после кавычки ничего нет
+	%format(Str, "Ќет закрывающей одинарной кавычки"),
+	msg_n(err, 103, [] ,b_false), %% нужно ввести сообщение в файл сообщений с номером
+	fail.
+form_intemplate_list(_,Rule,InList,ResList):-
+	fronttoken(Rule,Tok1,Rest1),
+	Tok1="'",
+	fronttoken(Rest1,Tok2,Rest2),
+	fronttoken(Rest2,Tok3,_),
+	not(Tok3="'"),!, %% через слово после кавычки стоит не одинарна€ кавычка
+	%format(Str, "Ќет закрывающей одинарной кавычки"),
+	msg_n(err, 103, [] ,b_false), %% нужно ввести сообщение в файл сообщений с номером
+	fail.
+form_intemplate_list(DescNt,Rule,InList,ResList):-
+	send_to_debug("ƒошел до правила с' "),
+	fronttoken(Rule,Tok1,Rest1),
+	Tok1="'",
+	fronttoken(Rest1,Tok2,Rest2),
+	send_to_debug(Tok2),
+	fronttoken(Rest2,Tok3,RestRule),
+	send_to_debug(Tok3),
+	Tok3="'",!, %% через слово после кавычки стоит одинарна€ кавычка	
+	send_to_debug(RestRule),
+	append(InList,[w(Tok2)],InListNew), %% вводитс€ терминал в список
+	form_intemplate_list(DescNt, RestRule, InListNew, ResList).
+	
+	
+	
+form_intemplate_list(DescNt, Rule,InList,ResList):-
+	fronttoken(Rule,Tok,RestRule),!, %% вводитс€ нетерминал Tok
+	create_new_constant(nc(Tok), DescNt,DescTok),
+	append(InList,[var(DescTok)],InListNew),
+	form_intemplate_list(DescNt, RestRule, InListNew, ResList).
+
+
+
         

@@ -571,11 +571,12 @@ create_new_constant(nc(Name),Ob,_Res):-
          impose_all_not_message(Name,Term,Type),
          accord(Type,Ob,SupOb),  %согласование типов Type и Ob
          bound(Term),!,
-	 expr_to_str(Ob,StrOb),
-	 expr_to_str(SupOb,StrSupOb),
+         calc(Term, _Res).
+	 %expr_to_str(Ob,StrOb),
+	% expr_to_str(SupOb,StrSupOb),
          %format(Str, "Выражение \"%\" уже есть в области \"%\", которая содержит область \"%\".",Name,StrSupOb,StrOb),
-          msg_n(err,31,[Name,StrSupOb,StrOb],b_false),
-          fail.
+          %msg_n(err,31,[Name,StrSupOb,StrOb],b_false),
+          %fail.
 create_new_constant(nc(Name),Type,ex(Op,[])):-!,
 	calc(Type,T),
 	upper_lower(Name, LowerName),

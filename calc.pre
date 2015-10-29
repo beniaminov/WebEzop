@@ -30,6 +30,16 @@ weigh(expr,integer)-(i,o)
 subobjects_of(expr,expr_list) - (i,o)
 
 
+expr_to_struct_str(expr,string) - (i,o) % Этот предикат нужно объявить глобальным. Его можно определить там же, где опрелен expr_to_str в фале Editor.pre
+				% и написать там же, где написан expr_to_str (вместе с остальными, используемыми в нем предикатами)
+				%Предикат вызывается в calc.pro из предиката calc, как реакция на шаблон "Показать структуру @Expr"
+
+translate_struct(expr,string,integer Level) - (i,o,i)
+translate_struct_list(expr_list,slist,integer) - (i,o,i)
+otstup(integer,string,string) - (i,i,o)
+
+
+
 
 
 

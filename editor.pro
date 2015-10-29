@@ -30,7 +30,7 @@ include "export.pre"
 predicates
 append(slist,slist,slist) - (i,i,o)
 append(expr_list,expr_list,expr_list) - (i,i,o)
-
+append(list_w_v_t, list_w_v_t, list_w_v_t) - (i, i, o)
 
 member(string, slist) - determ (i,i)
 member(integer, ilist) - determ (i,i)
