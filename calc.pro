@@ -3123,6 +3123,8 @@ calc_on_approx(ex(">",[Ex1,Ex2]),B):-
         bigger(R1,R2,B), !.
         
         
+calc_on_approx(ex("type_of",[Term]),Type):-!, type(Term,Type).
+
 /********** Общая процедура **********/	
 /*
 calc_on_approx(ex(Opname,Arglist),Res):-
