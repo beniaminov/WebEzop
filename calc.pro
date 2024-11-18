@@ -1,4 +1,4 @@
-
+% Модуль вычисления термов (выражений)
 
 ifndef iso_prolog
 
@@ -15,31 +15,21 @@ PREDICATES
 member(expr,expr_list) - (i,i)
 member(pair,pair_list) - (i,i)
 
-
-predicates         
-           
 create_langrules(expr DescLeft, string Rule, expr DescNt) - determ(i,i,i).  %% который  вводит  	%шаблоны по альтернативным правилам
-form_intemplate(expr DescLeft, string Rule, expr DescNt) - determ(i,i,i)  %% оторый  вводит  	%шаблон по тексту правила
+form_intemplate(expr DescLeft, string Rule, expr DescNt) - determ(i,i,i)  %% который  вводит  	%шаблон по тексту правила
 
+ calc_list(expr_list,expr_list) -determ (i,o)  % Вычисление списка выражений
+calc_on_approx_list(expr_list,expr_list)    % Вычисление списка выражений на аппроксимации без ее мзменения
+cat_eval_approx(expr,expr)                       % Оценка выражения на аппроксимации
 
- calc_list(expr_list,expr_list) -determ (i,o)
-%calc_type_list(expr_list,slist)
-calc_on_approx_list(expr_list,expr_list)
-cat_eval_approx(expr,expr)
-%list_type_arg(List_w_v_t,expr_list)
-%desc_type(expr,expr Type) - (i,o)
-
-%make_eq.pro
-
-% select.pro
 select_report(expr,expr,string) - (i,i,o)
 %select_where_report(expr,expr,string,string) - (i,i,i,o)
 select_where_report(string Select,string Vars,string Cond,string Report) - (i,i,i,o)
-determ replace(string,string,string,string)% - (i,i,i,o)
-determ list_replace(slist,string,string,string)% - (i,i,i,o)
+%determ replace(string,string,string,string)% - (i,i,i,o)
+%determ list_replace(slist,string,string,string)% - (i,i,i,o)
 retract_at(string,string) - (i,o)
 nondeterm get_list_element(expr_list,expr_list) - (i,o)
-nondeterm exprlist_check2(expr_list)
+%nondeterm exprlist_check2(expr_list)
 var_type(expr_list,expr_list) - (i,o)
 list_replace_var_on_ex(expr_list,expr_list,expr_list,expr_list) - (i,i,i,o)
 create_row_report(expr_list,expr_list,expr_list,expr) - (i,i,i,i)
@@ -55,8 +45,7 @@ nondeterm create_temp_vars(string,string)
 separ(string,slist)
 nondeterm scan1 (string,slist,string)
 calc_list_to_listStr(expr_list,string) - (i,o)
-% calc.pro
-% calc(expr,expr) - (i,o)  (i, r(o))
+
  eval(string,expr_list,expr) - (i,i,o) % (i,i,r(o))
 get_IdConcept(string Name,integer ID) -(i,o)
 get_IdConceptForOp(string,integer IdConcept)  -(i,o)
@@ -112,13 +101,6 @@ calc_set_in_exprlist(expr_list,expr_list)
 calc_deg(real,real,real)
 get_int_deg(real,integer Deg,integer,real,real Res)
 calc_div(real,real,real)
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
-% defined in editor.pro
-%append([],L,L):-!.
-%append([H|T1],L,[H|T2]):-append(T1,L,T2).
-
-%include "form\\trans.pro"
 
 PREDICATES
 %expr_to_str(expr,string) - (i,o)
@@ -223,8 +205,8 @@ chk_attr(expr_list,expr,expr,expr_list)
 %respond1(expr_list,expr_list,slist,slist)
 new_respond(expr_list,expr,string)
 new_respond1(expr_list,expr_list,string) 
-swhere_respond(expr_list,expr,slist)
-swhere_respond1(expr_list,expr_list,slist)
+%swhere_respond(expr_list,expr,slist)
+%swhere_respond1(expr_list,expr_list,slist)
 make_row(expr_list,expr,slist)
 calc_or_undefined(expr,string)
 nondeterm subobject_or_element (expr,expr)
@@ -245,15 +227,15 @@ insertAfter(slist,string,string,slist)
 nondeterm create_report(integer,slist,string)
 */
 /* Добавила 20.01.03 */
-get_width_colons(integer,slist,ilist,ilist)
-get_rowlist(slist,slist,integer,slist)
-get_listlength(slist,ilist)
-list_max_of_lists(ilist,ilist,ilist)
-empty_string(string,integer,string,string,integer)
-check_max_len_str(string,integer,string)
+%get_width_colons(integer,slist,ilist,ilist)
+%get_rowlist(slist,slist,integer,slist)
+%get_listlength(slist,ilist)
+%list_max_of_lists(ilist,ilist,ilist)
+%empty_string(string,integer,string,string,integer)
+%check_max_len_str(string,integer,string)
 %Вариант 1 с tab
 %Вариант 2 с '_'
-list_to_string2(ilist,string,slist,string)
+%list_to_string2(ilist,string,slist,string)
 
 %include "form\\cateval.pro"
 %include "editor.inc"
@@ -1588,7 +1570,7 @@ str_to_wlist(Str,[w(H)|T]):-
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 	%replace(_,_,"","").
-	
+/*	
 	replace(WordToRepl,NewWord,Str,S0):-
 		fronttoken(Str,WordToRepl,S2),
 		!,
@@ -1611,7 +1593,7 @@ str_to_wlist(Str,[w(H)|T]):-
 		replace(H,NewWord,InputString,Output),
 		write(Output),nl,
 		list_replace(T,NewWord,Output,Output1).
-
+*/
 
 /*
 create_temp_vars(Vars,TempVars):- 
@@ -1721,11 +1703,11 @@ select_where_report(Select,Vars,Cond,Report):-
 	send_to_debug(Header),
 	create_temp_vars(Vars,TempVars),
 	send_to_debug(TempVars),
-	impose_all(TempVars,TempVarsTerm,TempVarsType),
+	impose_all(TempVars,TempVarsTerm,_TempVarsType),
 	lst_var(TempVarsTerm,TempVarsTermList),
 	var_type(TempVarsTermList,TypeTempVarsTermList),
 	
-	impose_all(Vars,TermVars,TypeV), %на входе переменные с типами (Vars), на выходе термы выражений (TermVars(expr)) и их типы (эта часть не выполняется) (_TypeV(expr))
+	impose_all(Vars,TermVars,_TypeV), %на входе переменные с типами (Vars), на выходе термы выражений (TermVars(expr)) и их типы (эта часть не выполняется) (_TypeV(expr))
 	lst_var(TermVars,ListVar),%преобразование термов переменных (TermVars(expr)) в список термов (ListVar(expr_list))
 	upper_lower (Select, LowerText),%перевод названия шаблона в нижний регистр
        	
@@ -1764,7 +1746,7 @@ calc_list_to_listStr(ExprTerm,TRString):-
 	concat("<tr>",TermSlistTD,TermSlistTD1),
 	concat(TermSlistTD1,"</tr>",TRString).
 
-
+/*
 exprlist_check2([H2|[]]).
 exprlist_check2([H|T]):-
 	T=[H1|T1],
@@ -1772,7 +1754,7 @@ exprlist_check2([H|T]):-
 	expr_to_str(H1,H1Str),
 	Hstr=H1str,
 	exprlist_check2(T).
-
+*/
 create_all_row(Res,Res):-
 	not(table_report(_)),
 	send_to_debug(Res),!.
@@ -1814,7 +1796,7 @@ retract_at(Stroka,Result):-
 retract_at(_,"").
 	
 
-	
+/*	
 swhere_respond([],_,[]):-!.
 swhere_respond(Listmor,Ob,List) :-
 	findall(El,element_of_object(El,Ob),Listexpr), % postroenie spiska vseh elementov deskriptora imeni klassa Ob
@@ -1825,7 +1807,7 @@ swhere_respond1(_,[],[]).
 swhere_respond1(Listmor,[HEl|TEl],[]) :-!,%byl Aux vmesto [], pochemu ne rabotaet s ""????
 	swhere_respond1(Listmor,TEl,Tmp),
 	make_row(Listmor,HEl,Listrow).
-
+*/
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 %include "form\\select.pro"
 
@@ -1930,7 +1912,7 @@ strong_subobject(Ob2,Ob1):-
 	strong_subobject(Ob,Ob1).
 
 /* Добавила 20.01.03. Программа create_report  новая*/
-
+/*
 get_width_colons(_,[],ListW,ListW):- !.
 get_width_colons(N,ListS,Aux,ListW):-
 	get_rowlist(ListS,List1,N,Rest),
@@ -1959,13 +1941,13 @@ empty_string(Empt,C,Aux,Str,R):- C<R,!,
 
 check_max_len_str(Str,mlen,Str):- str_len(Str,Len),Len < mlen +1,!.
 check_max_len_str(Str,mlen,Str1):- frontstr(mlen,Str,Str1,_).
-
+*/
 
 
 
 
 /* Вариант 2 с '_' */
-
+/*
 list_to_string2(_,Str,[],Str):- !.
 list_to_string2([HW|TW],Aux,[H|T],Str):-
 	str_len(H,Len),
@@ -1974,7 +1956,7 @@ list_to_string2([HW|TW],Aux,[H|T],Str):-
 	concat(H,ZStr,H1),
 	format(Aux1,"%\t%",Aux,H1), 
 	list_to_string2(TW,Aux1,T,Str).
-
+*/
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 
@@ -2846,15 +2828,15 @@ calc_type_list([H|T],[Htype|Ttype]):-
 	calc_type_list(T,Ttype),!.
 */
 
-calc_type(undef,undef):-!.
-calc_type(nc(X),Type):-bound(X),calc(ex("new",[]),Type),!.
+calc_type(undef,undef):-!.                                                   %Тип неопределенного выражения
+calc_type(nc(X),Type):-bound(X),calc(ex("new",[]),Type),!. %Тип нововой константы
 
-calc_type(v(_,T),T):-!.
+calc_type(v(_,T),T):-!.                                                           %Тип переменной
 
-calc_type(Ex,Type):-
+calc_type(Ex,Type):-                                                            %Тип терма после вычисления в аппроксимации 
 			calc(Ex,DescEx), !,
 			type(DescEx,Type).
-calc_type(_,Type):-calc(ex("term",[]),Type),!.
+calc_type(_,Type):-calc(ex("term",[]),Type),!.                      %Тип правильно построенного невычисляемого терма - это терм
 
 /*
 %!!!!!!!!!! Переделать с учетом предиката   type. Предикат calc_type сначала делает calc, а потом type от результата.
@@ -2912,13 +2894,13 @@ calc_on_approx(Exp,_Res):-
 	write("\n",Exp),
 	fail.
 */	
-calc_on_approx(ex("()",[Expr]),Res):-!,
+calc_on_approx(ex("()",[Expr]),Res):-!,   % Вычисление выражения в скобках
          calc_on_approx(Expr,Res).
-calc_on_approx(ex(",",[Ex1,Ex2]),ex(",",[Res1,Res2])):-!,
+calc_on_approx(ex(",",[Ex1,Ex2]),ex(",",[Res1,Res2])):-!, % Вычисление выражений, разделенных запятой
          calc_on_approx(Ex1,Res1),
          calc_on_approx(Ex2,Res2).
 
-calc_on_approx(ex("first_element",[ex(",",[Ex1,_Ex2])]),Ex1):-
+calc_on_approx(ex("first_element",[ex(",",[Ex1,_Ex2])]),Ex1):- % Вычисление первого выражения, в выражении разделенного запятыми
 	not(Ex1=ex(",",[_,_])),!.
 calc_on_approx(ex("first_element",[ex(",",[Ex1,_Ex2])]),Ex):-!,
 	calc_on_approx(ex("first_element",[Ex1]),Ex).
@@ -2986,35 +2968,19 @@ calc_on_approx(v(X,T),v(X,T)):-!.
 
 
 calc_on_approx(ex("r_minus1",[X]),Res):- calc_on_approx(X,Rx),Rx=r(R1),!, 
-ifndef iso_prolog
 					R = -R1, 
-elsedef
-					R is -R1, 
-enddef					
 					Res=r(R).
 calc_on_approx(ex("r_plus",[X,Y]),Res):- calc_on_approx(X,C1),C1=r(R1), 
 					calc_on_approx(Y,C2),C2=r(R2),!,
-ifndef iso_prolog
 					R=R1+R2,
-elsedef
-					R is R1+R2,
-enddef					
 					Res=r(R).
 calc_on_approx(ex("r_minus",[X,Y]),Res):- calc_on_approx(X,C1),C1=r(R1), 
 					calc_on_approx(Y,C2),C2=r(R2),!,
-ifndef iso_prolog
 					R=R1-R2, 
-elsedef
-					R is R1-R2, 
-enddef					
 					Res=r(R).
 calc_on_approx(ex("r_times",[X,Y]),Res):- calc_on_approx(X,C1),C1=r(R1), 
 					calc_on_approx(Y,C2),C2=r(R2),!,
-ifndef iso_prolog
 					R=R1*R2,
-elsedef
-					R is R1*R2,
-enddef					
 					Res=r(R).
 calc_on_approx(ex("r_div",[X,Y]),Res):-
 					 calc_on_approx(X,C1),C1=r(R1), 
@@ -3023,11 +2989,7 @@ calc_on_approx(ex("r_div",[X,Y]),Res):-
 calc_on_approx(ex("r_skobki",[X]),R):- calc_on_approx(X,R),!.
 calc_on_approx(ex("r_mtimes",[X,Y]),Res):- calc_on_approx(X,C1),C1=r(R1), 
 					calc_on_approx(Y,C2),C2=r(R2),!,
-ifndef iso_prolog
 					R=R1*R2,
-elsedef
-					R is R1*R2,
-enddef					
 					Res=r(R).
 calc_on_approx(ex("r_mdiv",[X,Y]),Res):- calc_on_approx(X,C1),C1=r(R1), 
 					calc_on_approx(Y,C2),C2=r(R2),!,
@@ -3136,10 +3098,10 @@ calc_on_approx(ex(Opname,Arglist),Res):-
 */
 
 calc_on_approx(ex(Opname,Arglist),Res):-
-	%write("Calc ", Opname, ":Calc "),
-	%write("Arglist: ",Arglist,":Arglist"),
+	%write("Calc ", Opname, ":Calc "),                %Для отладки
+	%write("Arglist: ",Arglist,":Arglist"),               %Для отладки
 	calc_on_approx_list(Arglist,Desclist),
-	%write("Desclist: ",Desclist,":Desclist"),
+	%write("Desclist: ",Desclist,":Desclist"),       %Для отладки
 	cat_eval_approx(ex(Opname,Desclist),Res),!.
 
 /*
@@ -3155,9 +3117,9 @@ calc_on_approx_or_reduce(Exp,Res):-!,
 
 %calc_on_approx(Ex,Ex):-!.
 
-cat_eval_approx(Exp,Exp):-
+cat_eval_approx(Exp,Exp):-        %Если на вход поступает дескриптор
 	        descriptor(_,Exp,_),!.
-cat_eval_approx(Exp,Desc):-
+cat_eval_approx(Exp,Desc):-      %Если входной терм есть в таблице resalt_op
 		resalt_op(_,Exp,Desc),!.
 	
 /********************* Begin eval ********************/		
@@ -3334,25 +3296,25 @@ form_intemplate(DescLeft,Rule, DescNt):-       %% общий случай
 
 form_intemplate_list(_,Rule,List,List):-
 	not(fronttoken(Rule,_,_)),!. %% накопленный список становится результатом
-form_intemplate_list(_,Rule,InList,ResList):-
+form_intemplate_list(_,Rule,_InList,_ResList):-
 	fronttoken(Rule,Tok1,Rest1),
 	Tok1="'", %% начинается с одинарной кавычки
 	not(fronttoken(Rest1,_,_)),!, %% дальше ничего нет
 	%%format(Str, "Лишняя одинарная кавычка"),
 	msg_n(err, 102, [] ,b_false), %% нужно ввести сообщение в файл сообщений с номером
 	fail.
-form_intemplate_list(_,Rule,InList,ResList):-
+form_intemplate_list(_,Rule,_InList,_ResList):-
 	fronttoken(Rule,Tok1,Rest1),
 	Tok1="'", %% начинается с одинарной кавычки
-	fronttoken(Rest1,Tok2,Rest2),
+	fronttoken(Rest1,_Tok2,Rest2),
 	not(fronttoken(Rest2,_,_)),!,  %% через слово после кавычки ничего нет
 	%format(Str, "Нет закрывающей одинарной кавычки"),
 	msg_n(err, 103, [] ,b_false), %% нужно ввести сообщение в файл сообщений с номером
 	fail.
-form_intemplate_list(_,Rule,InList,ResList):-
+form_intemplate_list(_,Rule,_InList,_ResList):-
 	fronttoken(Rule,Tok1,Rest1),
 	Tok1="'",
-	fronttoken(Rest1,Tok2,Rest2),
+	fronttoken(Rest1,_Tok2,Rest2),
 	fronttoken(Rest2,Tok3,_),
 	not(Tok3="'"),!, %% через слово после кавычки стоит не одинарная кавычка
 	%format(Str, "Нет закрывающей одинарной кавычки"),

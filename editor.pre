@@ -22,7 +22,7 @@ fatalErrorMsg (string) - procedure (i)
 write_added_templates
 change(string,string) - procedure (i,o)
 change1(string,string) - procedure (i,o)
-my_change(string,string,string) - (i,i,o)
+my_change(string,string,string) - procedure(i,i,o)
 send_templates_list(string, twodimlist) - determ (i,o)
 send_to_debug(STRING)
 get_paramVal(string Param, string Value)- procedure(i,o)

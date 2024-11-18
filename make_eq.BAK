@@ -1665,7 +1665,7 @@ order_expr(Ex1,Ex2,Ex2,Ex1):-
  enddef	
         !. 
         
- order_expr(Ex1,Ex2,Ex1,Ex2):-!.
+ order_expr(Ex1,Ex2,Ex1,Ex2):-!
  
  /*
  order_expr(ex(Op1,Arg1),ex(Op2,Arg2),ex(Op1,Arg1),ex(Op2,Arg2)):-

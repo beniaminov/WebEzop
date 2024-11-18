@@ -1,0 +1,308 @@
+
+%ifndef iso_prolog
+
+include "domains.pre"
+
+% global databases defined here
+
+
+%*************************************	THIS FACT IS FOR DEBUGGING!	*************************************										
+/*
+GLOBAL DATABASE - fordebugging
+	parToCheck (string)
+*/	
+	
+%************************************************************************************************************	
+
+/*     
+GLOBAL DATABASE - edit_window
+	%con_list_window(WINDOW)
+	%edit_window(WINDOW,STRING FileName,STRING Data)
+	count(INTEGER,STRING PreFile,STRING PostFile)
+	%edwin(string,boolean)
+*/
+GLOBAL DATABASE - cgiParms
+	parm(string Name,string Value)
+
+
+GLOBAL DATABASE - globalParams
+	determ location (string) 
+	determ kbname (string) 
+	text_to_execute (string, string)
+	determ dialog_answer (string)
+	determ new_cnpt_name (string)
+	determ readonly_concept (string)
+	single ifbuilt_concept (string)
+	determ curid (string)
+	determ oldid (string)
+	nondeterm my_message (string)
+	determ inset(string)
+	nondeterm version(string)
+	determ mainver(string _1Main0Not)
+	determ  mode_answer
+	determ answer_text_all (string)
+	answer_text (string, expr)
+
+GLOBAL DATABASE - execute_state
+ done(action)
+ determ	fatal_error
+ determ	execute_command_error
+ determ	state_interpret_well
+ determ	glob_int(integer)
+ determ	glob_ilist(ilist)
+ nondeterm	glob_slist(slist)
+ determ  glob_string(string)
+ %determ  mode_answer
+ determ	marker_present
+ 
+ GLOBAL DATABASE - table_report
+ nondeterm table_report(string)
+
+
+GLOBAL DATABASE - status
+ determ concept_changed
+ determ current_concept_name(string)
+
+GLOBAL DATABASE - config
+ tmessage(type_msg, string Text, string On_Off) 
+ determ deduce_on_approx(string On_Off)
+ determ dlg_ask_do_element(string On)
+ determ maxlong_deduce(integer)
+
+GLOBAL DATABASE - message_ezp
+ msg_text(integer,string)
+
+GLOBAL DATABASE - environ
+ determ environment(string FileName)
+ 
+GLOBAL DATABASE - msg_list
+ single textlist (slist)
+ single typelist (type_msg_list)
+ single statelist (slist)
+
+GLOBAL DATABASE - templates
+ template(integer  IdConcept,  id Id_template, string Text,     string Opname, string   омментарий, list_w_v_t ListTemplate,   expr ResultType)
+ dir_dtt(integer N_1_OR_2,string Dir,string SubDir) %распределение подпапок шаблонов по папкам
+ dir_tt(integer N_1_OR_2,string Dir,  integer  IdConcept,  id Id_template) %распределение шаблонов по папкам
+ determ dir_con_tt(slist)   %текущий  каталог окна списка шаблонов
+ determ dir_papki_tt(slist)  %текущий каталог окна папки шаблонов
+
+
+Global DATABASE - dic_windows
+ dic_window(expr Type)
+ dir_dt(string Dir,string SubDir) %распределение подпапок шаблонов по папкам
+ dir_t(string Dir,  integer  IdConcept,  id Id_template) %распределение шаблонов по папкам
+    dir_con_t(slist)   %текущий  каталог окна списка шаблонов
+    dir_papki_t(slist)  %текущий каталог окна папки шаблонов
+
+Global DATABASE - notion_base
+        single  notion_base(string NameBase)
+
+GLOBAL DATABASE - id_4_xml
+  single id_4_xml (integer)
+  
+GLOBAL DATABASE - concept_names
+ nondeterm name_file(string Name,string File, string FileEnvironment, string Defin1)
+ use(integer OforUseOr1forParent,integer IdConcept, integer IdUsedConcept)
+ ver(string IdConceptMain, string IdConceptVersion)
+ dir_c(string Dir, string NameConcept) %распределение онтологий по папкам
+ dir_dc(string Dir, string SubDir) %распределение подпапок по папкам
+ determ  dir_con(slist)   %текущий каталог окна списка онтологий
+ determ  dir_papki(slist)  %текущий каталог окна папки онтологий
+
+%!!!! ѕри изменении в concept 
+%изменить term_ToConceptOrTmp из calctls.pro и changeIdInConcept в editor.pro 
+
+GLOBAL DATABASE - concept 
+ determ idconcept(integer)
+ in_template(integer IdDostup_0_1_2, integer ID_Concept,id Id_template, string Text, string Opname, string  омментарий, list_w_v_t —писок_шаблона,expr TypeRes)
+ exec_templ(integer ID_Concept,string Opname,expr_list LcalcVar,expr TermChek,expr TermExec)
+ del_template(integer IdConcept,string Opname,list_w_v_t List,expr Type)
+ used_concept(integer OforUseOr1forParent,integer ID_Concept_where, integer ID_Concept_used)
+ element_concept(integer ID_Concept, expr ElObject, integer RefConcept, integer ID_Concept_Type) 
+ resalt_op(integer ID_Concept,expr,expr)
+ rwt_rule(integer ID_C, id, string Msg,expr_list ListVar,expr Lterm,expr Rterm,expr PredCond,expr PostCond)
+ descriptor(integer ID_Concept,expr,integer ¬ес)
+ not_eq_desc(integer ID_Concept,expr,expr)     %используетс€ только в make_equal.pro
+ subobject(integer ID_Concept,expr Sub,expr Super) %пары сравнимых областей, между которыми нет нетривиальной подобласти
+ not_subobject(integer ID_Concept,expr,expr)
+ element(integer ID_Concept,expr Element,expr Ob) % элемент и наименьша€ подобласть, содержаща€ этот элемент
+ not_element(integer ID_Concept,expr,expr)
+ current_inconsist (integer ID_Concept)
+ inconsist(integer ID_Concept,expr,expr)
+ defin1(integer ID_Concept,string)
+ defin2(integer ID_Concept,string)
+ last_cmd(integer ID_Concept,string) 
+ %determ user(string UserName)
+%user(string UserName)
+Facts - sintax  %временные данные дл€ разбора предложени€
+ word_of_sentence(integer Nword, integer Nplace, integer NplaceEnd,w_v_t)
+ determ restText(string)  
+ determ lenText(integer) 
+ determ  lastTerm(expr Term,integer NnextWord)
+
+Facts - dictionaries
+ word_dictionary(string,list_idTemplate,list_idTemplate) %слово, список номеров шаблонов1, %список номеров шаблонов2
+
+
+%Anna)
+
+
+/* ƒобавила 6.02.03 */
+
+GLOBAL Facts - number_win_grammar
+ db_win_grammar(string)
+
+GLOBAL DATABASE - modi    /* в нормальном состо€нии эта база пуста */
+	  eq_desc(expr,expr)
+	  modification_resalt_op(expr,expr)    /* модификаци€ resalt_op */
+
+
+global facts -synonym
+synonym_desc(expr,expr)
+
+
+global facts - dic_templates
+dic(templates)
+
+global facts -counts
+determ count_l(integer)
+
+global facts - tmp_concept
+t(concept)
+
+/*
+elsedef
+% iso prolog dynamic predicates definitions
+%define dynamic_module_list
+/*
+:- dynamic
+     idconcept/1,
+     in_template/8,
+     exec_templ/5,
+     del_template/4,
+     used_concept/3,
+     element_concept/4,
+     resalt_op/3,
+     rwt_rule/8,
+     descriptor/3,
+     not_eq_desc/3,
+     subobject/3,
+     not_subobject/3,
+     element/3,
+     not_element/3,
+     current_inconsist/1,
+     inconsist/3,
+     defin1/2,
+     defin2/2,
+     last_cmd/2,
+     
+location/1, %(string) 
+kbname/1, % (string) 
+text_to_execute/2, % (string, string)
+dialog_answer/1, % (string)
+new_cnpt_name/1, % (string)
+readonly_concept/1, % (string)
+curid/1, % (string)
+oldid/1, % (string)
+my_message/1, % (string)
+inset/1, %(string)
+
+%GLOBAL DATABASE - globalParams
+location/1,
+kbname/1,
+text_to_execute/2,
+dialog_answer/1,
+new_cnpt_name/1, 
+readonly_concept/1,
+curid/1,
+oldid/1,
+my_message/1,
+inset/1,
+
+%GLOBAL DATABASE - msg_list
+textlist/1,
+typelist/1,
+statelist/1,
+
+%Global DATABASE - notion_base
+notion_base/1,
+
+%GLOBAL DATABASE - concept_names
+name_file/4,
+use/3,
+dir_c/2,
+dir_dc/2,
+dir_con/1,
+dir_papki/1,
+
+%Facts - dictionaries
+ word_dictionary/3, 
+ 
+%Facts - sintax  %временные данные дл€ разбора предложени€
+ word_of_sentence/4,
+ restText/1,
+ lenText/1,
+ lastTerm/2,
+ 
+%GLOBAL DATABASE - execute_state
+ done/1,
+ fatal_error/0,
+ execute_command_error/0,
+ state_interpret_well/0,
+ glob_int/1,
+ glob_ilist/1,
+ glob_slist/1,
+ glob_string/1,
+ mode_answer/0,
+ marker_present/0,
+ answer_text/2,
+ 
+%GLOBAL DATABASE - config
+ tmessage/3,
+ deduce_on_approx/1,
+ dlg_ask_do_element/1,
+ maxlong_deduce/1,
+ 
+%GLOBAL DATABASE - message_ezp
+ msg_text/2,
+ 
+
+%GLOBAL DATABASE - modi
+  eq_desc/2,
+  modification_resalt_op/2,
+
+%global facts -synonym
+	synonym_desc/2,
+
+
+%GLOBAL DATABASE - status
+ concept_changed/0,
+ current_concept_name/1,
+
+%GLOBAL DATABASE - templates
+ template/7,
+ dir_dtt/3,
+ dir_tt/4,
+ dir_con_tt/1,
+ dir_papki_tt/1,
+
+%GLOBAL DATABASE - id_4_xml
+  id_4_xml/1,
+
+%Global DATABASE - dic_windows
+ dic_window/1,
+ dir_dt/2,
+ dir_t/3,
+ dir_con_t/1,
+ dir_papki_t/1,
+
+%global facts - dic_templates
+  dic/1
+
+
+.
+
+*/
+enddef
+*/

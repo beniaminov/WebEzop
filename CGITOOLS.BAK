@@ -367,6 +367,8 @@ enddef
          closefile(input),
          fatalErrorMsg("Параметры в файле param_cgi.txt написаны неверно."),
          !. 
+
+
   cgi_GetParmList( ParmList ) :- % реальная загрузка по CGI
 	cgi_GetString(CGI_String),
 	str_namelist(CGI_String,ParmList),

@@ -6,9 +6,8 @@ global Domains
 GLOBAL PREDICATES  
 
 
-calc_on_approx(expr,expr) - determ (i,o)  % Вычисление терма по аппроксимации, не меняя ее. Выдает второй аргумет - дескриптор первого аргумента в аппроксимации
-                                                                   % Заканчивается неудачей (fail), если терм не входит в аппроксимаци, без сообщений
-calc(expr,expr) -determ (i,o)  %(i, r(o))       % Вычисление терма с возможным измененем аппроксимации
+calc_on_approx(expr,expr) - determ (i,o)  % Вычисление термов по аппроксимации, не меняя ее. Выдает второй аргумет - дескриптор первого аргумента в аппроксимации
+calc(expr,expr) -determ (i,o)  %(i, r(o))       % Вычисление термов с возможным измененем аппроксимации
 expr_to_str(expr,string) - procedure (i,o)  % Перевод терма в текст с использование шаблонов операций и переменных
 replaceStr_all(string Old, string New,string Str,string NewStr) - determ (i,i,i,o)
 error_msg(STRING,INTEGER) - determ (i,i)

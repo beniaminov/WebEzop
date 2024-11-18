@@ -1680,9 +1680,9 @@ my_change(InText,OutText,Result):-
 	frontstr(Pos1,InText,Head,Tail),
 	aux_change(Head,"",ChangedHead),
 	concat(OutText,ChangedHead,OutText1),
-	searchstring(Tail,"</html>",Pos2),
+	searchstring(Tail,"</html>",Pos2),!,
 	Pos3=Pos2+6,
-	frontstr(Pos3,Tail,Head1,Tail1),!,
+	frontstr(Pos3,Tail,Head1,Tail1),
 	concat(OutText1,Head1,OutText2),
 	my_change(Tail1,OutText2,Result).
 	

@@ -23,5 +23,5 @@ write("runing parser tests..."),
 consult("kernel.tmt",templates), %загрузка шаблонов
 consult("init.ntn", concept), %загрузка основной среды
 write("1+2?  "),
-  impose_all("1+2?",Term,_Type),
+  impose_all("1+2?",Term,Type),
 write(Term),nl.

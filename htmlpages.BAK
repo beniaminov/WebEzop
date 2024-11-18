@@ -422,7 +422,7 @@ write("</textarea>"),
 
 get_current_concept_name( Name ),
 test_inconsistence(ClassID),
-ifReadonlyNoCnptName(Readonly, _ShowSubMenu),  
+ifReadonlyNoCnptName(Readonly, ShowSubMenu),  
 ifBuilt(Text2,ShowState),
 %<!-- QuickMenu Structure [Menu 0] -->
 
@@ -713,7 +713,7 @@ get_current_environment_file(NameEnvId),
 get_inset(Inset),  
 get_defin1(Defin1),
 change(Defin1,Defin1Changed),
-choose_mode(Name, _ModeLabel, _ModeValue),
+choose_mode(Name, _ModeLabel, ModeValue),
 %user(UserName),
 
 %choose_mode(Name, ModeLabel, ModeValue),
@@ -1260,7 +1260,7 @@ get_current_environment_file(NameEnvId),
 get_inset(Inset),  
 get_defin1(Defin1),
 change(Defin1,Defin1Changed),
-choose_mode(Name, _ModeLabel, _ModeValue),
+choose_mode(Name, _ModeLabel, ModeValue),
   
 write(" <form action=\"editor.exe\" target=\"exp_concept_text\" method=\"POST\" id = \"main_form\"> "),
 write(" <p><input type=\"hidden\" id=\"dlg_ask\" name = \"dlg_ask\" value = \"\"> "),
